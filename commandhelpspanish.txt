@@ -1,5 +1,3 @@
-================================================================================
----------------------------------
 /etc/passwd   -> Usuarios
 /etc/group    -> Grupos
 /etc/shadow   -> Contraseñas (solo root)
@@ -9,9 +7,7 @@ cat /etc/passwd
 cat /etc/group
 sudo cat /etc/shadow
 
----------------------------------
-CREAR GRUPOS Y USUARIOS
----------------------------------
+
 Crear grupo:
 sudo addgroup administrativo
 
@@ -20,20 +16,15 @@ sudo adduser xoan --ingroup administrativo
 
 se usa adduser
 
----------------------------------
-CAMBIAR GRUPO PRINCIPAL
----------------------------------
 Cambiar grupo principal de un usuario:
 sudo usermod -g administrativo xoan
----------------------------------
-CAMBIAR DE USUARIO
----------------------------------
+
 Entrar correctamente en el usuario:
-su - xoan
+su - usuario
 
 Comprobar HOME:
 pwd
-Debe salir: /home/xoan
+Debe salir: /home/usuario
 
 ---------------------------------
 CREAR ARCHIVOS
@@ -46,9 +37,7 @@ MOVER ARCHIVOS
 Mover archivo a otro usuario:
 sudo mv /home/xoan/impostos /home/pepa/
 
----------------------------------
-CAMBIAR PROPIETARIO Y GRUPO
----------------------------------
+
 Cambiar usuario y grupo de un archivo:
 sudo chown usuario:grupo /home/usuario/ficheiro
 
