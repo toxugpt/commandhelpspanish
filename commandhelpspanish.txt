@@ -1,225 +1,45 @@
-/etc/passwd   -> Usuarios
-/etc/group    -> Grupos
-/etc/shadow   -> Contraseñas (solo root)
+sudo adduser usuario
 
-Ver contenido:
-cat /etc/passwd
-cat /etc/group
-sudo cat /etc/shadow
+sudo adduser usuario --ingroup grupo
 
-
-Crear grupo:
-sudo addgroup administrativo
-
-Crear usuario con grupo principal:
-sudo adduser xoan --ingroup administrativo
-
-se usa adduser
-
-Cambiar grupo principal de un usuario:
-sudo usermod -g administrativo xoan
-
-Entrar correctamente en el usuario:
 su - usuario
 
-Comprobar HOME:
-pwd
-Debe salir: /home/usuario
+id usuario
 
----------------------------------
-CREAR ARCHIVOS
----------------------------------
-Crear archivos vacíos:
-touch factura1 factura2 impostos
----------------------------------
-MOVER ARCHIVOS
----------------------------------
-Mover archivo a otro usuario:
-sudo mv /home/xoan/impostos /home/pepa/
+sudo usermod -g grupo usuario
 
+sudo usermod -aG grupo usuario
 
-Cambiar usuario y grupo de un archivo:
-sudo chown usuario:grupo /home/usuario/ficheiro
+sudo deluser usuario
 
-chown usuario:grupo archivo
----------------------------------
-CAMBIAR GRUPO A DIRECTORIO
----------------------------------
-Cambiar grupo a todo un directorio:
-sudo chgrp -R grupo /home/usuario
+sudo deluser --remove-home usuario
 
--R = recursivo
----------------------------------
-BORRAR GRUPOS
----------------------------------
-Borrar grupo sin usuarios:
-sudo groupdel usuario
+sudo addgroup grupo
 
-Comprobar:
-cat /etc/group
----------------------------------
-DISCOS Y PARTICIONES
----------------------------------
-Los discos están en /dev
+sudo groupdel grupo
 
-Listar discos y particiones:
-ls /dev/sd*
-
-Archivos que terminan en e:
-ls /dev/*e
-
-Empiezan por c y tercera letra r:
-ls /dev/c?r*
-
-
----------------------------------
-COMPROBACIONES ÚTILES
----------------------------------
-Ver permisos:
-ls -l
-
-Ver bloques y particiones:
-lsblk
-sudo fdisk -l
-
-===============================================
-ARCHIVOS IMPORTANTES
-/etc/passwd   -> usuarios
-/etc/group    -> grupos
-/etc/shadow   -> contraseñas (root)
-
-Ver:
-cat /etc/passwd
-cat /etc/group
-sudo cat /etc/shadow
-
-
-CREAR GRUPOS Y USUARIOS
-sudo addgroup administrativo
-sudo adduser xoan --ingroup administrativo
-
-
-CAMBIAR GRUPO PRINCIPAL (MUY IMPORTANTE)
-sudo usermod -g administrativo xoan
-(NO se hace con chmod)
-
-
-CAMBIAR DE USUARIO (CORRECTO)
-su - xoan
-pwd   -> /home/xoan
-
-
-CREAR ARCHIVOS
-touch factura1 factura2 impostos
-
-
-MOVER ARCHIVOS
-sudo mv /home/xoan/impostos /home/pepa/
-
-
-CAMBIAR PROPIETARIO Y GRUPO
-sudo chown pepa:contabilidade /home/pepa/impostos
-(Formato: usuario:grupo)
-
-
-CAMBIAR GRUPO A UN DIRECTORIO ENTERO
-sudo chgrp -R administrativo /home/xoan
-
-
-BORRAR GRUPO (SIN USUARIOS)
-sudo groupdel xoan
 cat /etc/group
 
+groups usuario
 
-DISCOS Y PARTICIONES
-ls /dev/sd*        -> discos y particiones
-ls /dev/*e         -> terminan en e
-ls /dev/c?r*       -> c + tercera letra r
+sudo passwd usuario
 
+Cambiar tu contraseña
+passwd
 
-COMPROBACIONES
-ls -l              -> permisos y propietarios
-lsblk              -> ver discos
-sudo fdisk -l      -> ver particiones
+Cambiar usuario y grupo:
+sudo chown usuario:grupo archivo
 
-======================================================
-discos y particiones /dev
-Disco: sda, sdb
-Partición: sda1, sdb1
-
-1. IDENTIFICAR DISCOS Y PARTICIONES
-lsblk
-sudo fdisk -l
+Cambiar solo grupo:
+sudo chgrp grupo archivo
 
 
-2. ENTRAR A PARTICIONAR (SIEMPRE AL DISCO)
-sudo fdisk /dev/sdb
-
-Dentro de fdisk:
-p -> ver particiones
-n -> nueva partición
-d -> borrar partición
-w -> guardar cambios
-q -> salir sin guardar
-
-
-3. FORMATEAR PARTICIÓN (OBLIGATORIO)
-sudo mkfs.ext4 /dev/sdb1
-
-ERROR GRAVE: formatear /dev/sdb
-
-
-4. CREAR PUNTO DE MONTAJE
-sudo mkdir /mnt/datos
-
-
-5. MONTAR PARTICIÓN
-sudo mount /dev/sdb1 /mnt/datos
-
-Comprobar:
-df -h
-mount | grep sdb1
-
-
-6. DESMONTAR PARTICIÓN
-sudo umount /mnt/datos
-o
-sudo umount /dev/sdb1
-
-
-7. MONTAJE AUTOMÁTICO (fstab)
-Ver UUID:
-blkid
-
-Editar fstab:
-sudo nano /etc/fstab
-
-Ejemplo línea:
-UUID=abcd-1234  /mnt/datos  ext4  defaults  0  2
-
-Comprobar:
-sudo mount -a
-
-
-8. BORRAR PARTICIONES
-sudo fdisk /dev/sdb
-d
-1
-w
-
-
-ERRORES QUE SUSPENDEN
-- Montar sin formatear
-- Usar /dev/sdb en vez de /dev/sdb1
-- No crear carpeta de montaje
-- Olvidar guardar con w
-- No comprobar fstab
-
-
-COMANDOS CLAVE A MEMORIZAR
-lsblk
-fdisk
-mkfs.ext4
-mount
-umount
-blkid
+adduser
+addgroup
+usermod
+deluser
+groupdel
+su -
+id
+groups
+chown
